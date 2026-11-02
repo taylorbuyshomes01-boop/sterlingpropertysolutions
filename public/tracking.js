@@ -34,7 +34,14 @@
       if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0'; n.queue = [];
       t = b.createElement(e); t.async = !0; t.src = v; s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s);
     }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
-    window.fbq('init', META_PIXEL_ID);
+    /* Initialise once. On later pages the visitor's email/phone are already known, so pass them for advanced matching. */
+    var um = {};
+    try {
+      var stored = JSON.parse(sessionStorage.getItem('sps_lead') || 'null');
+      if (stored && stored.email) um.em = String(stored.email).trim().toLowerCase();
+      if (stored && stored.phone) um.ph = e164(stored.phone).replace(/\D/g, '');
+    } catch (_) {}
+    if (um.em || um.ph) window.fbq('init', META_PIXEL_ID, um); else window.fbq('init', META_PIXEL_ID);
     window.fbq('track', 'PageView');
   }
 
@@ -158,16 +165,8 @@
     }).catch(function () {});
   }
 
-  /* Advanced matching: re-init with the lead's email/phone so Meta can match the event to a profile. */
-  function identify(lead) {
-    if (!pixelReady() || !lead || !(lead.email || lead.phone)) return;
-    try {
-      var um = {};
-      if (lead.email) um.em = String(lead.email).trim().toLowerCase();
-      if (lead.phone) um.ph = e164(lead.phone).replace(/\D/g, '');
-      window.fbq('init', META_PIXEL_ID, um);
-    } catch (_) {}
-  }
+  /* Matching data goes to Meta via init() on later pages and via the server-side Conversions API; never re-init. */
+  function identify() {}
 
   /* ---- events ---- */
   function trackViewContent() {
