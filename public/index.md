@@ -31,9 +31,9 @@ Sterling Property Solutions buys houses directly from homeowners for cash, as-is
 
 **Not for you if:** you want top retail price and can wait months for it; your house is currently listed with an agent; you're not actually ready to sell; you're only curious what it's worth.
 
-## Hi, I'm Oliva. You'll talk to a real person.
+## Hi, I'm Olivia. You'll talk to a real person.
 
-Selling a house is rarely just about the house. It might be a foreclosure notice, a loved one's home you aren't ready to let go of, a divorce, or a move you didn't plan. When you reach out to Sterling Property Solutions, we listen first. No pressure, no judgment, no call center. Oliva Renee is the owner.
+Selling a house is rarely just about the house. It might be a foreclosure notice, a loved one's home you aren't ready to let go of, a divorce, or a move you didn't plan. When you reach out to Sterling Property Solutions, we listen first. No pressure, no judgment, no call center. Olivia Renee is the owner.
 
 ## Questions
 
