@@ -821,8 +821,18 @@ app.post('/api/track-event',
   if (!event_name || !lead || typeof lead !== 'object') return res.status(400).json({ error: 'Missing required fields.' });
   if (!BROWSER_EVENTS.has(event_name)) return res.status(400).json({ error: 'Unsupported event.' });
 
+  /* Lead and CompleteRegistration count once per phone number (30 days), however many times the browser asks. */
+  const once = (event_name === 'Lead' || event_name === 'CompleteRegistration') && phoneKey(lead.phone || '')
+    ? `web:${sha256(phoneKey(lead.phone))}:${event_name}` : '';
+  const ONCE_MS = 30 * 24 * 3600 * 1000;
+  if (once) {
+    const seen = readEventLog()[once];
+    if (seen && Date.now() - Date.parse(seen.fired_at) < ONCE_MS) return res.json({ success: true, skipped: 'already counted' });
+  }
+
   try {
     const result = await postMetaEvent({ event: event_name, eventId: event_id, value, lead, req });
+    if (once && result.sent) { const log = readEventLog(); log[once] = { event: event_name, fired_at: new Date().toISOString() }; writeEventLog(log); }
     res.json({ success: true, ...result });
   } catch (err) {
     console.error('[meta-conversions-api]', err.message);

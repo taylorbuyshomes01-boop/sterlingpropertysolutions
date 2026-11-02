@@ -129,6 +129,26 @@
     });
   }
 
+  /* One count per person: remember (event, phone) for 30 days so a reload, a second tab or a repeat
+     submission with the same phone never sends a second Lead / CompleteRegistration to Meta. */
+  var ONCE_KEY = 'sps_counted_v1', ONCE_MS = 30 * 24 * 3600 * 1000;
+  function onceKey(name, lead) {
+    var d = String((lead && lead.phone) || '').replace(/\D/g, '').slice(-10);
+    return d ? name + ':' + d : '';
+  }
+  function alreadyCounted(name, lead) {
+    var k = onceKey(name, lead); if (!k) return false;
+    try { var m = JSON.parse(localStorage.getItem(ONCE_KEY) || '{}'); return !!(m[k] && Date.now() - m[k] < ONCE_MS); } catch (_) { return false; }
+  }
+  function markCounted(name, lead) {
+    var k = onceKey(name, lead); if (!k) return;
+    try {
+      var m = JSON.parse(localStorage.getItem(ONCE_KEY) || '{}'), now = Date.now();
+      Object.keys(m).forEach(function (x) { if (now - m[x] > ONCE_MS) delete m[x]; });
+      m[k] = now; localStorage.setItem(ONCE_KEY, JSON.stringify(m));
+    } catch (_) {}
+  }
+
   function leadEventId(lead) {
     var id = lead && lead.lead_event_id;
     if (!id) id = uuid();
@@ -203,6 +223,8 @@
       }
       sessionStorage.setItem('sps_lead_conversion_sent', eventId);
     } catch (_) {}
+    if (alreadyCounted('Lead', lead)) { if (typeof done === 'function') done(eventId); return eventId; }
+    markCounted('Lead', lead);
 
     identify(lead);
     if (pixelReady()) window.fbq('track', EVENTS.lead, {
@@ -223,6 +245,8 @@
       if (sessionStorage.getItem('sps_complete_reg_sent')) return;
       sessionStorage.setItem('sps_complete_reg_sent', '1');
     } catch (_) {}
+    if (alreadyCounted('CompleteRegistration', lead)) return;
+    markCounted('CompleteRegistration', lead);
     var eventId = 'reg_' + (lead && lead.lead_event_id ? lead.lead_event_id : uuid());
     var value = leadValueFromTimeline(lead && lead.timeline);
     identify(lead);
