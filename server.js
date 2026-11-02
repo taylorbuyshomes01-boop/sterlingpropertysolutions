@@ -12,7 +12,7 @@ const app = express();
 app.set('trust proxy', true);
 app.disable('x-powered-by');
 
-const SITE_ORIGIN = 'https://sterlingpropertysolutions.org';
+const SITE_ORIGIN = 'https://offer.sterlingpropertysolutions.org';
 
 /* Real visitor IP. Render's edge (Cloudflare) overwrites CF-Connecting-IP, so unlike the leftmost
    X-Forwarded-For entry a visitor cannot spoof it to dodge the rate limits below. */
@@ -623,9 +623,9 @@ app.get('/api/debug-ghl-payload', (req, res) => {
     fbp: "fb.1.1700000000.sample",
     fbc: "fb.1.1700000000.sample-fbclid",
     landing_variant: 'a',
-    landing_page_url: 'https://sterlingpropertysolutions.org/',
+    landing_page_url: 'https://offer.sterlingpropertysolutions.org/',
     referrer: 'https://l.facebook.com/',
-    first_conversion_page: 'https://sterlingpropertysolutions.org/',
+    first_conversion_page: 'https://offer.sterlingpropertysolutions.org/',
     lead_created_date: new Date().toISOString(),
     original_platform: 'meta',
     lead_event_id: 'lead_sample_123',

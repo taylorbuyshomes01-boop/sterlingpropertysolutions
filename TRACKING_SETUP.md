@@ -15,7 +15,7 @@ Event names live in `EVENTS` at the top of `public/tracking.js` (browser) and `O
 ## Ad URL (set on every Facebook / Instagram ad)
 
 ```
-https://sterlingpropertysolutions.org/?utm_source=facebook&utm_medium=paid_social&utm_campaign={{campaign.name}}&utm_term={{adset.name}}&utm_content={{ad.name}}
+https://offer.sterlingpropertysolutions.org/?utm_source=facebook&utm_medium=paid_social&utm_campaign={{campaign.name}}&utm_term={{adset.name}}&utm_content={{ad.name}}
 ```
 
 Meta adds `fbclid` to the link on its own when someone taps the ad; you don't add it.
@@ -30,7 +30,7 @@ Create GHL custom fields for `fbclid`, `fbp`, `fbc`, `landing_variant`, `is_meta
 
 ## GHL stage webhook
 
-POST opportunity/contact payload (including the custom fields above) to `https://sterlingpropertysolutions.org/api/ghl-stage-webhook`. Send the secret as header `x-webhook-secret`. Leads that did not come from Meta ads are ignored.
+POST opportunity/contact payload (including the custom fields above) to `https://offer.sterlingpropertysolutions.org/api/ghl-stage-webhook`. Send the secret as header `x-webhook-secret`. Leads that did not come from Meta ads are ignored.
 
 ## Testing
 

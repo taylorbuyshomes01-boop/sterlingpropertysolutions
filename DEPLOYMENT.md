@@ -1,12 +1,12 @@
-# Deployment: sterlingpropertysolutions.org
+# Deployment: offer.sterlingpropertysolutions.org
 
 Node web service on Render (`render.yaml` Blueprint, service `sterling-property-solutions`).
 
 1. Push this folder to a **new private GitHub repo** for Sterling only.
 2. Render > New > Blueprint > connect that repo.
 3. Enter these in Render > Environment (never in git): `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, `TWILIO_VERIFY_SERVICE_SID`, `ADMIN_KEY`, `GHL_WEBHOOK_FORM`, `GHL_WEBHOOK_VERIFY`, `GHL_WEBHOOK_SURVEY`, `GHL_STAGE_SECRET`, `META_PIXEL_ID`, `META_ACCESS_TOKEN` (and `META_TEST_EVENT_CODE` only while testing).
-4. Render > service > Settings > Custom Domains > add `sterlingpropertysolutions.org` (and `www.`). Render shows the exact DNS records to create at the domain registrar; follow those.
-5. Google Cloud Console: add `https://sterlingpropertysolutions.org/*` to the HTTP-referrer restrictions of the Maps/Places API key used in `public/index.html`, or address autocomplete will fail.
+4. Render > service > Settings > Custom Domains > add `offer.sterlingpropertysolutions.org`. Then at the domain registrar add a CNAME record: Name `offer`, Value = the `.onrender.com` address Render shows for this service. Leave the main site and the email records alone.
+5. Google Cloud Console: add `https://offer.sterlingpropertysolutions.org/*` to the HTTP-referrer restrictions of the Maps/Places API key used in `public/index.html`, or address autocomplete will fail.
 6. Verify: `/api/health`, then the Test Events flow in TRACKING_SETUP.md.
 7. Search Console: add the site and submit `sitemap.xml`.
 

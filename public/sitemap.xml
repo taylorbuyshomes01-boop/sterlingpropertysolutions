@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Human- and LLM-readable map of the same pages: https://sterlingpropertysolutions.org/sitemap.md -->
+<!-- Human- and LLM-readable map of the same pages: https://offer.sterlingpropertysolutions.org/sitemap.md -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://sterlingpropertysolutions.org/</loc>
+    <loc>https://offer.sterlingpropertysolutions.org/</loc>
     <lastmod>2026-11-01</lastmod>
   </url>
   <url>
-    <loc>https://sterlingpropertysolutions.org/privacy</loc>
+    <loc>https://offer.sterlingpropertysolutions.org/privacy</loc>
     <lastmod>2026-11-01</lastmod>
   </url>
   <url>
-    <loc>https://sterlingpropertysolutions.org/terms</loc>
+    <loc>https://offer.sterlingpropertysolutions.org/terms</loc>
     <lastmod>2026-11-01</lastmod>
   </url>
 </urlset>

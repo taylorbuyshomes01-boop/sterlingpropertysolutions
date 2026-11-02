@@ -2,14 +2,14 @@
 
 > Sterling Property Solutions buys houses directly from homeowners for cash, as-is, nationwide (United States), with no repairs, no fees and no commissions. Closing as fast as 7 days or on the seller's timeline. Phone: (443) 329-9736.
 
-For the full text of the landing page in plain Markdown, read [the landing page answers](https://sterlingpropertysolutions.org/index.md). For every page on the site, read [the Markdown site map](https://sterlingpropertysolutions.org/sitemap.md).
+For the full text of the landing page in plain Markdown, read [the landing page answers](https://offer.sterlingpropertysolutions.org/index.md). For every page on the site, read [the Markdown site map](https://offer.sterlingpropertysolutions.org/sitemap.md).
 
 ## Pages
 
-- [Sell my house fast for cash (landing page, Markdown)](https://sterlingpropertysolutions.org/index.md): how selling to us works, who it is and is not for, and FAQs.
-- [Site map (Markdown)](https://sterlingpropertysolutions.org/sitemap.md): every public page and its Markdown or HTML address.
+- [Sell my house fast for cash (landing page, Markdown)](https://offer.sterlingpropertysolutions.org/index.md): how selling to us works, who it is and is not for, and FAQs.
+- [Site map (Markdown)](https://offer.sterlingpropertysolutions.org/sitemap.md): every public page and its Markdown or HTML address.
 
 ## Legal
 
-- [Privacy Policy](https://sterlingpropertysolutions.org/privacy)
-- [Terms of Service](https://sterlingpropertysolutions.org/terms)
+- [Privacy Policy](https://offer.sterlingpropertysolutions.org/privacy)
+- [Terms of Service](https://offer.sterlingpropertysolutions.org/terms)

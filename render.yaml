@@ -4,7 +4,7 @@ services:
     runtime: node
     plan: starter
     domains:
-      - sterlingpropertysolutions.org
+      - offer.sterlingpropertysolutions.org
     buildCommand: npm install
     startCommand: npm start
     healthCheckPath: /api/health

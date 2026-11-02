@@ -1,4 +1,4 @@
-# Sterling Property Solutions - https://sterlingpropertysolutions.org
+# Sterling Property Solutions - https://offer.sterlingpropertysolutions.org
 # Public landing page is open to crawlers. The API and admin tools are not.
 # The sign-up steps (/verify, /property, /success, /not-a-fit) are left crawlable on purpose so
 # their noindex tag can be seen; they are not in the sitemap.
@@ -9,4 +9,4 @@ Allow: /
 Disallow: /api/
 Disallow: /admin/
 
-Sitemap: https://sterlingpropertysolutions.org/sitemap.xml
+Sitemap: https://offer.sterlingpropertysolutions.org/sitemap.xml
