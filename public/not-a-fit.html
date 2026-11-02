@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>We're Not a Fit Right Now | Sterling Property Solutions</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#0b1f4f">
+  <link rel="icon" type="image/png" href="/favicon.png?v=2">
+  <script>document.documentElement.classList.add("js");(function(){try{var q=new URLSearchParams(location.search).get('v');if(q)sessionStorage.setItem('sps_variant',q.toLowerCase());if(sessionStorage.getItem('sps_variant')==='b')document.documentElement.setAttribute('data-theme','b');}catch(e){}})();</script>
+  <link rel="preload" href="fonts/montserrat-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css?v=20261031-tt16">
+  <script src="consent.js?v=20261031-tt16" defer></script>
+  <script src="tracking.js?v=20261031-tt16" defer></script>
+</head>
+<body>
+
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <a href="/" class="nav-brand" aria-label="Sterling Property Solutions">
+      <img src="logo-nav-small.webp" alt="Sterling Property Solutions" class="nav-logo-img" width="252" height="66" decoding="async">
+    </a>
+    <div class="nav-right">
+      <a href="tel:+14433299736" class="nav-phone" aria-label="Call (443) 329-9736">(443) 329-9736</a>
+    </div>
+  </nav>
+
+  <div class="naf-hero" role="region" aria-labelledby="naf-heading">
+    <h1 class="naf-heading" id="naf-heading">We're not the right fit<br>while your home is listed</h1>
+    <p class="naf-subhead">
+      Since your property is currently listed with an agent, we can't make an offer right now.
+      We work directly with homeowners, not through the MLS or agent agreements.
+    </p>
+    <a href="tel:+14433299736" class="naf-phone-btn" aria-label="Call Sterling Property Solutions at (443) 329-9736">Call (443) 329-9736</a>
+  </div>
+
+  <div class="naf-body">
+    <div class="naf-body-inner">
+      <h2 class="naf-body-heading">What to do when your listing expires</h2>
+      <p class="naf-body-text">If your listing ends and you're still looking for a simple, fast sale, come back and we'll be glad to talk with you.</p>
+
+      <div class="naf-cards">
+        <div class="naf-card"><h3>When your listing expires</h3><p>Come back to this page and submit your address. We'll talk it through with you right away.</p></div>
+        <div class="naf-card"><h3>No commissions</h3><p>Selling directly means no agent commission coming out of your sale price.</p></div>
+        <div class="naf-card"><h3>Close on your timeline</h3><p>No waiting on a buyer's financing. You choose the closing date.</p></div>
+        <div class="naf-card"><h3>Sell as-is</h3><p>No cleaning, staging, or repairs required before closing.</p></div>
+      </div>
+
+      <div class="naf-cta-box">
+        <p>When your listing expires and you want a hassle-free cash sale, reach out anytime.</p>
+        <a href="tel:+14433299736" class="naf-phone-btn" aria-label="Call Sterling Property Solutions at (443) 329-9736">Call (443) 329-9736</a>
+        <br>
+        <a href="/" class="naf-back-link">&larr; Back to Sterling Property Solutions</a>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container footer-inner">
+      <img src="logo-footer.webp" alt="Sterling Property Solutions" class="footer-logo" width="520" height="137" loading="lazy" decoding="async">
+      <p>&copy; <span id="footerYear"></span> Sterling Property Solutions. All rights reserved.</p>
+      <nav class="footer-links" aria-label="Footer links">
+        <a href="/privacy">Privacy Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="/privacy#cookies" data-consent-open>Your Privacy Choices</a>
+      </nav>
+      <p class="footer-disclaimer">Sterling Property Solutions is a private real estate investment company and is not affiliated with any government program or agency.</p>
+    </div>
+  </footer>
+  <script>document.getElementById('footerYear').textContent = new Date().getFullYear();</script>
+
+<script id="sps-naf-variants">
+  (function () {
+    var r = (new URLSearchParams(location.search).get('r') || 'listed');
+    var V = {
+      condo: {
+        h: "We're not the right fit<br>for condos",
+        s: "We buy houses, townhomes and small multi-family properties, so we can't make an offer on a condo. We're sorry we can't help with this one.",
+        bh: "Know someone with a house to sell?",
+        bt: "If you or someone you know owns a house, townhome or small multi-family property, we'd be glad to talk with you.",
+        cta: "Have a house to sell instead? Reach out anytime."
+      },
+      'mobile-rented': {
+        h: "Sorry, we can't buy a mobile home<br>on rented land",
+        s: "We can only buy a mobile or manufactured home when the land under it belongs to the owner too. We're sorry we can't help with this one.",
+        bh: "Own the land under it, or have another property?",
+        bt: "If the land is yours, or you have a house, townhome or small multi-family property to sell, we'd be glad to talk with you.",
+        cta: "Have another property to sell? Reach out anytime."
+      }
+    };
+    var v = V[r]; if (!v) return;
+    document.getElementById('naf-heading').innerHTML = v.h;
+    var sub = document.querySelector('.naf-subhead'); if (sub) sub.textContent = v.s;
+    var bh = document.querySelector('.naf-body-heading'); if (bh) bh.textContent = v.bh;
+    var bt = document.querySelector('.naf-body-text'); if (bt) bt.textContent = v.bt;
+    var cards = document.querySelector('.naf-cards'); if (cards) cards.style.display = 'none';
+    var cb = document.querySelector('.naf-cta-box p'); if (cb) cb.textContent = v.cta;
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verify Your Phone | Sterling Property Solutions</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#0b1f4f">
+  <link rel="icon" type="image/png" href="/favicon.png?v=2">
+  <script>document.documentElement.classList.add("js");(function(){try{var q=new URLSearchParams(location.search).get('v');if(q)sessionStorage.setItem('sps_variant',q.toLowerCase());if(sessionStorage.getItem('sps_variant')==='b')document.documentElement.setAttribute('data-theme','b');}catch(e){}})();</script>
+  <link rel="preload" href="fonts/montserrat-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css?v=20261031-tt16">
+  <script src="consent.js?v=20261031-tt16" defer></script>
+  <script src="tracking.js?v=20261031-tt16" defer></script>
+</head>
+<body class="verify-page">
+
+  <!-- Navigation -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <a href="/" class="nav-brand" aria-label="Sterling Property Solutions - Home">
+      <span class="nav-logo-wrap">
+        <img src="logo-nav-small.webp" alt="Sterling Property Solutions" class="nav-logo-img" width="252" height="66" decoding="async">
+      </span>
+    </a>
+    <div class="nav-right">
+      <a href="tel:+14433299736" class="nav-phone" aria-label="Call (443) 329-9736">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/>
+        </svg>
+        <span class="phone-text">(443) 329-9736</span>
+      </a>
+    </div>
+  </nav>
+
+  <main class="verify-main" role="main">
+    <div class="verify-card" role="region" aria-labelledby="verify-heading">
+
+      <div class="verify-icon" aria-hidden="true">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.95 12.5 19.79 19.79 0 01.9 3.88 2 2 0 012.88 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L7.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
+        </svg>
+      </div>
+
+      <h1 id="verify-heading">Verify Your Phone</h1>
+      <p>
+        We sent a 6-digit verification code to<br>
+        <strong class="verify-phone-display" id="phoneSent">your phone</strong>.<br>
+        Enter it below to continue.
+      </p>
+
+      <fieldset style="border:none;padding:0">
+        <legend class="sr-only">Enter your 6-digit verification code</legend>
+        <div class="otp-group" role="group" aria-label="Verification code input">
+          <input class="otp-input" type="text" inputmode="numeric" pattern="[0-9]" maxlength="1" aria-label="Digit 1 of 6" autocomplete="one-time-code">
+          <input class="otp-input" type="text" inputmode="numeric" pattern="[0-9]" maxlength="1" aria-label="Digit 2 of 6">
+          <input class="otp-input" type="text" inputmode="numeric" pattern="[0-9]" maxlength="1" aria-label="Digit 3 of 6">
+          <input class="otp-input" type="text" inputmode="numeric" pattern="[0-9]" maxlength="1" aria-label="Digit 4 of 6">
+          <input class="otp-input" type="text" inputmode="numeric" pattern="[0-9]" maxlength="1" aria-label="Digit 5 of 6">
+          <input class="otp-input" type="text" inputmode="numeric" pattern="[0-9]" maxlength="1" aria-label="Digit 6 of 6">
+        </div>
+      </fieldset>
+
+      <div class="verify-error" id="verifyError" role="alert" aria-live="polite"></div>
+
+      <button class="btn-verify" id="verifyBtn" disabled aria-label="Verify my phone number">
+        Verify &amp; Continue
+      </button>
+
+      <div class="resend-row">
+        Didn't receive it?&nbsp;
+        <button class="resend-btn" id="resendBtn" disabled aria-label="Resend verification code">
+          Resend code
+        </button>
+        <span id="resendTimer" class="resend-timer" aria-live="polite"></span>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Screen-reader only utility -->
+  <style>.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0}</style>
+
+  <script>
+    (function () {
+      'use strict';
+
+      /* Restore lead data */
+      var lead = null;
+      try { lead = JSON.parse(sessionStorage.getItem('sps_lead') || 'null'); } catch (_) {}
+      if (!lead) { window.location.href = '/'; return; }
+
+
+      /* Show masked phone */
+      function maskPhone(p) {
+        if (!p || p.length < 10) return 'your phone';
+        return '(***) ***-' + p.slice(-4);
+      }
+      document.getElementById('phoneSent').textContent = maskPhone(lead.phone);
+
+      /* OTP inputs */
+      var inputs = Array.from(document.querySelectorAll('.otp-input'));
+      var verifyBtn = document.getElementById('verifyBtn');
+      var verifyError = document.getElementById('verifyError');
+      var resendBtn = document.getElementById('resendBtn');
+      var resendTimer = document.getElementById('resendTimer');
+      var timerInterval = null;
+
+      function getCode() { return inputs.map(function (i) { return i.value; }).join(''); }
+
+      function updateVerifyBtn() {
+        var code = getCode();
+        verifyBtn.disabled = code.length < 6;
+        if (code.length === 6) inputs.forEach(function (i) { i.classList.add('filled'); });
+      }
+
+      function clearError() {
+        verifyError.textContent = '';
+        inputs.forEach(function (i) { i.classList.remove('is-invalid'); });
+      }
+
+      inputs.forEach(function (input, idx) {
+        input.addEventListener('keydown', function (e) {
+          if (e.key === 'Backspace' && !input.value && idx > 0) {
+            inputs[idx - 1].value = '';
+            inputs[idx - 1].focus();
+          }
+        });
+
+        input.addEventListener('input', function (e) {
+          clearError();
+          var val = input.value.replace(/\D/g, '');
+          if (!val) { input.value = ''; updateVerifyBtn(); return; }
+
+          /* Handle paste of full code */
+          if (val.length > 1) {
+            val.split('').forEach(function (ch, i) {
+              if (inputs[idx + i]) { inputs[idx + i].value = ch; inputs[idx + i].classList.add('filled'); }
+            });
+            var next = inputs[Math.min(idx + val.length, 5)];
+            if (next) next.focus();
+            updateVerifyBtn();
+            return;
+          }
+
+          input.value = val;
+          input.classList.toggle('filled', !!val);
+          if (val && idx < 5) inputs[idx + 1].focus();
+          updateVerifyBtn();
+        });
+
+        input.addEventListener('focus', function () { input.select(); });
+      });
+
+      /* Verify submission */
+      verifyBtn.addEventListener('click', function () {
+        var code = getCode();
+        verifyError.textContent = '';
+        verifyBtn.disabled = true;
+        verifyBtn.textContent = 'Verifying…';
+
+        fetch('/api/verify-code', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({ phone: lead.phone, code: code, lead: lead }),
+        })
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          if (data.error) {
+            showError(data.error);
+            verifyBtn.disabled = false;
+            verifyBtn.textContent = 'Verify & Continue';
+            return;
+          }
+          /* Verified — keep the proof-of-verification token for the survey step, then move on */
+          try { sessionStorage.setItem('sps_vtoken', data.token || ''); } catch (_) {}
+          window.location.href = '/property';
+        })
+        .catch(function () {
+          showError('Something went wrong. Please try again.');
+          verifyBtn.disabled = false;
+          verifyBtn.textContent = 'Verify & Continue';
+        });
+      });
+
+      function showError(msg) {
+        verifyError.textContent = msg;
+        inputs.forEach(function (i) { i.classList.add('is-invalid'); i.classList.remove('filled'); i.value = ''; });
+        inputs[0].focus();
+        verifyBtn.disabled = true;
+      }
+
+      /* Resend countdown */
+      function startCountdown(seconds) {
+        resendBtn.disabled = true;
+        var remaining = seconds;
+        function tick() {
+          resendTimer.textContent = ' (' + remaining + 's)';
+          if (remaining <= 0) {
+            clearInterval(timerInterval);
+            resendTimer.textContent = '';
+            resendBtn.disabled = false;
+          }
+          remaining--;
+        }
+        tick();
+        timerInterval = setInterval(tick, 1000);
+      }
+
+      startCountdown(60);
+
+      resendBtn.addEventListener('click', function () {
+        clearInterval(timerInterval);
+        startCountdown(60);
+        fetch('/api/send-code', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({ phone: lead.phone }),
+        }).catch(function () {});
+      });
+
+      /* Focus first input on load */
+      inputs[0].focus();
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+services:
+  - type: web
+    name: sterling-property-solutions
+    runtime: node
+    plan: starter
+    domains:
+      - sterlingpropertysolutions.org
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: TWILIO_ACCOUNT_SID
+        sync: false
+      - key: TWILIO_AUTH_TOKEN
+        sync: false
+      - key: TWILIO_VERIFY_SERVICE_SID
+        sync: false
+      - key: META_PIXEL_ID
+        sync: false
+      - key: META_ACCESS_TOKEN
+        sync: false
+      - key: META_TEST_EVENT_CODE
+        sync: false
+      - key: GHL_WEBHOOK_FORM
+        sync: false
+      - key: GHL_WEBHOOK_VERIFY
+        sync: false
+      - key: GHL_WEBHOOK_SURVEY
+        sync: false
+      - key: ADMIN_KEY
+        sync: false
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: GHL_STAGE_SECRET
+        sync: false

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tell Us About Your Home | Sterling Property Solutions</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#0b1f4f">
+  <link rel="icon" type="image/png" href="/favicon.png?v=2">
+  <script>document.documentElement.classList.add("js");(function(){try{var q=new URLSearchParams(location.search).get('v');if(q)sessionStorage.setItem('sps_variant',q.toLowerCase());if(sessionStorage.getItem('sps_variant')==='b')document.documentElement.setAttribute('data-theme','b');}catch(e){}})();</script>
+  <link rel="preload" href="fonts/montserrat-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css?v=20261031-tt16">
+  <script src="consent.js?v=20261031-tt16" defer></script>
+  <script src="tracking.js?v=20261031-tt16" defer></script>
+</head>
+<body class="property-page">
+
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <a href="/" class="nav-brand" aria-label="Sterling Property Solutions">
+      <span class="nav-logo-wrap">
+        <img src="logo-nav-small.webp" alt="Sterling Property Solutions" class="nav-logo-img" width="252" height="66" decoding="async">
+      </span>
+    </a>
+    <div class="nav-right">
+      <a href="tel:+14433299736" class="nav-phone" aria-label="Call (443) 329-9736">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/>
+        </svg>
+        <span class="phone-text">(443) 329-9736</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Progress strip -->
+  <div class="survey-progress-strip">
+    <div class="survey-progress-meta">
+      <span class="survey-step-label">Step 2 of 2</span>
+      <span class="survey-q-label" id="qLabel">Question 1 of 5</span>
+    </div>
+    <div class="survey-progress-track">
+      <div class="survey-progress-fill" id="progressFill"></div>
+    </div>
+  </div>
+
+  <main class="survey-main" role="main">
+    <div class="survey-card-wrap">
+
+      <div class="survey-card" id="surveyCard">
+        <h1 class="survey-q-title" id="surveyTitle"></h1>
+        <div class="survey-options" id="surveyOptions" role="group" aria-label="Select an option"></div>
+        <div class="survey-name-fields" id="nameFields">
+          <div class="survey-name-row">
+            <div class="form-group">
+              <label for="firstName">First Name <abbr title="required">*</abbr></label>
+              <input type="text" id="firstName" name="firstName" placeholder="First name" autocomplete="given-name" aria-required="true">
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last Name <abbr title="required">*</abbr></label>
+              <input type="text" id="lastName" name="lastName" placeholder="Last name" autocomplete="family-name" aria-required="true">
+            </div>
+          </div>
+          <div class="survey-name-error" id="nameError" role="alert" aria-live="polite"></div>
+          <button class="btn-survey-submit" id="finishBtn" type="button">See My Cash Offer &rarr;</button>
+        </div>
+      </div>
+
+      <div class="survey-nav-row">
+        <button class="survey-back-btn" id="backBtn" type="button" aria-label="Go back">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+          Back
+        </button>
+      </div>
+
+    </div>
+    <p class="survey-footer-note">Life is hard enough without having to worry about selling your home. We do everything possible to make this as easy and stress-free as possible.</p>
+  </main>
+
+  <script>
+    (function () {
+      'use strict';
+
+      /* ---- Guard: need lead data from form ---- */
+      var lead = null;
+      try { lead = JSON.parse(sessionStorage.getItem('sps_lead') || 'null'); } catch (_) {}
+      function vtoken() { try { return sessionStorage.getItem('sps_vtoken') || ''; } catch (_) { return ''; } }
+      if (!lead) { window.location.href = '/'; return; }
+
+      /* ---- Survey steps ----
+         Options are {label, value}: the label is what the seller reads, the value is exactly what
+         GoHighLevel already receives, so existing CRM fields and workflows keep matching. */
+      var o = function (label, value) { return { label: label, value: value || label }; };
+      var REASON_FROM_SITUATION = {
+        foreclosure: 'Facing Foreclosure', inherited: 'Inherited Property', divorce: 'Divorce / Separation',
+        relocation: 'Relocating', downsizing: 'Downsizing', repairs: 'Property Needs Too Many Repairs'
+      };
+      var ALL_STEPS = [
+        {
+          question: 'Is your house listed with an agent right now?',
+          key: 'listed',
+          type: 'choice',
+          options: [o('No, it is not listed', 'No'), o('Yes, it is listed', 'Yes')]
+        },
+        {
+          question: 'What type of property is it?',
+          key: 'propertyType',
+          type: 'choice',
+          options: [
+            o('Single-family house', 'Single Family'),
+            o('Townhome or duplex', 'Townhome / Duplex'),
+            o('Multi-family (2 to 4 units)', 'Multi-Family'),
+            o('Mobile or manufactured home', 'Mobile Home'),
+            o('Condo', 'Condo'),
+            o('Something else', 'Other')
+          ]
+        },
+        {
+          question: 'Is the mobile home on land you own?',
+          key: 'landOwned',
+          type: 'choice',
+          when: function (a) { return a.propertyType === 'Mobile Home'; },
+          options: [o('Yes, I own the land', 'Yes'), o('No, it is on rented or leased land', 'No')]
+        },
+        {
+          question: 'How soon do you want to sell?',
+          key: 'timeline',
+          type: 'choice',
+          options: [o('As soon as possible', 'ASAP'), o('Within 1 month', 'Within 1 Month'), o('Within 2 months', 'Within 60 Days'), o('Within 3 months', 'Within 90 Days'), o('No rush', 'No Timeline')]
+        },
+        {
+          question: 'What shape is the house in?',
+          key: 'repairs',
+          type: 'choice',
+          options: [
+            o('Move-in ready', 'Move-In Ready \u2014 No major repairs needed'),
+            o('Light updates (paint, flooring)', 'Light Cosmetic \u2014 Paint, flooring, minor updates'),
+            o('Needs real work (kitchen, baths, old systems)', 'Moderate Updates Needed \u2014 Kitchen, bathrooms, older systems'),
+            o('Major repairs throughout', 'Heavy Rehab \u2014 Major repairs needed throughout'),
+            o('Fire, water or mold damage', 'Fire / Water / Mold Damage'),
+            o('Vacant and needs a cleanout', 'Vacant & Needs Cleanout'),
+            o('Not sure', 'Not Sure')
+          ]
+        },
+        {
+          question: 'What is the main reason you are selling?',
+          key: 'reason',
+          type: 'choice',
+          when: function () { return !knownReason; },
+          options: [
+            o('I need to sell quickly', 'Need to Sell Quickly'),
+            o('The house needs too many repairs', 'Property Needs Too Many Repairs'),
+            o('I inherited it', 'Inherited Property'),
+            o('I am behind on payments', 'Behind on Payments'),
+            o('I am facing foreclosure', 'Facing Foreclosure'),
+            o('Divorce or separation', 'Divorce / Separation'),
+            o('I am tired of being a landlord', 'Tired of Being a Landlord'),
+            o('Moving or relocating', 'Relocating / Moving'),
+            o('Downsizing', 'Downsizing'),
+            o('Probate', 'Going Through Probate'),
+            o('Something else', 'Other')
+          ]
+        },
+        {
+          question: "Almost done! What's your name?",
+          key: 'name',
+          type: 'name'
+        }
+      ];
+
+      /* The seller already told us their situation on the landing page: don't ask it twice */
+      var knownReason = REASON_FROM_SITUATION[lead.situation || ''];
+      function activeSteps() { return ALL_STEPS.filter(function (s) { return !s.when || s.when(answers); }); }
+
+      var current     = 0;
+      var answers     = knownReason ? { reason: knownReason } : {};
+      var steps       = activeSteps();
+      var TOTAL       = steps.length;
+      var qualified   = false;
+
+      var card        = document.getElementById('surveyCard');
+      var titleEl     = document.getElementById('surveyTitle');
+      var optionsEl   = document.getElementById('surveyOptions');
+      var nameFields  = document.getElementById('nameFields');
+      var nameError   = document.getElementById('nameError');
+      var progressFill = document.getElementById('progressFill');
+      var qLabel      = document.getElementById('qLabel');
+      var backBtn     = document.getElementById('backBtn');
+      var finishBtn   = document.getElementById('finishBtn');
+      var firstNameEl = document.getElementById('firstName');
+      var lastNameEl  = document.getElementById('lastName');
+
+      /* ---- Progress ---- */
+      function setProgress() {
+        progressFill.style.width = Math.round((current / TOTAL) * 100) + '%';
+        qLabel.textContent = 'Step 3 of 3 \u00b7 Question ' + (current + 1) + ' of ' + TOTAL;
+        backBtn.style.visibility = current === 0 ? 'hidden' : 'visible';
+      }
+
+      /* ---- Build content for current step ---- */
+      function renderContent() {
+        var step = steps[current];
+        titleEl.textContent = step.question;
+
+        if (step.type === 'choice') {
+          optionsEl.style.display = 'flex';
+          nameFields.style.display = 'none';
+          optionsEl.innerHTML = '';
+
+          step.options.forEach(function (opt) {
+            var btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'survey-option-btn';
+            btn.textContent = opt.label;
+            if (answers[step.key] === opt.value) btn.classList.add('selected');
+
+            btn.addEventListener('click', function () {
+              answers[step.key] = opt.value;
+              optionsEl.querySelectorAll('.survey-option-btn').forEach(function (b) {
+                b.classList.remove('selected');
+              });
+              btn.classList.add('selected');
+
+              steps = activeSteps(); TOTAL = steps.length;
+
+              function leave(reason) { setTimeout(function () { window.location.href = '/not-a-fit?r=' + reason; }, 300); }
+
+              /* Qualified = not listed AND a property we buy. Only now do we tell GoHighLevel and Meta. */
+              function qualify() {
+                if (qualified) return;
+                qualified = true;
+                lead.propertyType = answers.propertyType || '';
+                lead.landOwned    = answers.landOwned || '';
+                try { sessionStorage.setItem('sps_lead', JSON.stringify(lead)); } catch (_) {}
+                fetch('/api/not-listed', {
+                  method:  'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body:    JSON.stringify({ lead: lead, phone: lead.phone, token: vtoken() }),
+                }).catch(function () {});
+                (function fireLeadPixel(attempt) {
+                  if (window.SPSTracking) {
+                    window.SPSTracking.trackLeadConversion(lead);
+                  } else if (attempt < 20) {
+                    setTimeout(function () { fireLeadPixel(attempt + 1); }, 100);
+                  }
+                }(0));
+              }
+
+              if (step.key === 'listed' && opt.value === 'Yes') { leave('listed'); return; }
+              if (step.key === 'propertyType') {
+                if (opt.value === 'Condo') { leave('condo'); return; }
+                if (opt.value !== 'Mobile Home') qualify();
+              }
+              if (step.key === 'landOwned') {
+                if (opt.value === 'No') { leave('mobile-rented'); return; }
+                qualify();
+              }
+
+              if (current < TOTAL - 1) {
+                setTimeout(function () {
+                  current++;
+                  fadeTransition();
+                }, 200);
+              }
+            });
+
+            optionsEl.appendChild(btn);
+          });
+
+        } else {
+          optionsEl.style.display = 'none';
+          nameFields.style.display = 'block';
+          nameError.textContent = '';
+          firstNameEl.classList.remove('is-invalid');
+          lastNameEl.classList.remove('is-invalid');
+          if (answers.firstName) firstNameEl.value = answers.firstName;
+          if (answers.lastName)  lastNameEl.value  = answers.lastName;
+          setTimeout(function () { firstNameEl.focus(); }, 50);
+        }
+      }
+
+      /* ---- Simple reliable fade transition ---- */
+      function fadeTransition() {
+        card.style.transition = 'opacity 140ms ease';
+        card.style.opacity = '0';
+        setTimeout(function () {
+          setProgress();
+          renderContent();
+          card.style.opacity = '1';
+        }, 150);
+      }
+
+      /* ---- Back ---- */
+      backBtn.addEventListener('click', function () {
+        if (current === 0) return;
+        current--;
+        fadeTransition();
+      });
+
+      /* ---- Finish (name step) ---- */
+      finishBtn.addEventListener('click', function () {
+        var fn = firstNameEl.value.trim();
+        var ln = lastNameEl.value.trim();
+        firstNameEl.classList.remove('is-invalid');
+        lastNameEl.classList.remove('is-invalid');
+        nameError.textContent = '';
+
+        if (!fn || !ln) {
+          if (!fn) firstNameEl.classList.add('is-invalid');
+          if (!ln) lastNameEl.classList.add('is-invalid');
+          nameError.textContent = 'Please enter both your first and last name.';
+          if (!fn) firstNameEl.focus(); else lastNameEl.focus();
+          return;
+        }
+
+        lead.firstName = fn;
+        lead.lastName  = ln;
+        lead.name      = fn + ' ' + ln;
+        lead.timeline  = answers.timeline || '';
+        lead.repairs   = answers.repairs  || '';
+        lead.reason    = answers.reason   || '';
+        lead.listed    = answers.listed   || '';
+        lead.propertyType = answers.propertyType || '';
+        lead.landOwned    = answers.landOwned || '';
+
+        try { sessionStorage.setItem('sps_lead', JSON.stringify(lead)); } catch (_) {}
+
+        finishBtn.disabled = true;
+        finishBtn.textContent = 'Submitting…';
+
+        fetch('/api/submit-survey', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({ lead: lead, token: vtoken() }),
+        })
+        .then(function (r) { return r.json(); })
+        .catch(function () { return {}; })
+        .then(function () {
+          window.location.href = '/success';
+        });
+      });
+
+      /* ---- Enter key on name inputs ---- */
+      [firstNameEl, lastNameEl].forEach(function (el) {
+        el.addEventListener('keydown', function (e) { if (e.key === 'Enter') finishBtn.click(); });
+        el.addEventListener('input', function () {
+          el.classList.remove('is-invalid');
+          nameError.textContent = '';
+        });
+      });
+
+      /* ---- Init: render immediately, no animation on first load ---- */
+      setProgress();
+      renderContent();
+
+    })();
+  </script>
+
+</body>
+</html>
