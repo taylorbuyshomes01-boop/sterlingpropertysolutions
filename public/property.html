@@ -225,7 +225,7 @@
 
               function leave(reason) { setTimeout(function () { window.location.href = '/not-a-fit?r=' + reason; }, 300); }
 
-              /* Qualified = not listed AND a property we buy. Only now do we tell GoHighLevel and Meta. */
+              /* Qualified = not listed AND a property we buy. Only now do we tell GoHighLevel. The Meta Lead fires on the success page, after the whole survey. */
               function qualify() {
                 if (qualified) return;
                 qualified = true;
@@ -237,13 +237,6 @@
                   headers: { 'Content-Type': 'application/json' },
                   body:    JSON.stringify({ lead: lead, phone: lead.phone, token: vtoken() }),
                 }).catch(function () {});
-                (function fireLeadPixel(attempt) {
-                  if (window.SPSTracking) {
-                    window.SPSTracking.trackLeadConversion(lead);
-                  } else if (attempt < 20) {
-                    setTimeout(function () { fireLeadPixel(attempt + 1); }, 100);
-                  }
-                }(0));
               }
 
               if (step.key === 'listed' && opt.value === 'Yes') { leave('listed'); return; }

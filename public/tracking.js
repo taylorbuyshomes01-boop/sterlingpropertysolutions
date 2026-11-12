@@ -3,8 +3,7 @@
  * Funnel → Meta event (browser pixel + server-side Conversions API, same event_id for dedupe):
  *   landing page view            → PageView + ViewContent
  *   step 1 form submit           → InitiateCheckout   (address + phone + email)
- *   phone verified & not listed  → Lead               (the qualified lead — optimize ads on this)
- *   survey finished              → CompleteRegistration
+ *   survey finished (success pg) → Lead               (the real lead — optimize ads on this)
  *   CRM stage changes (server)   → QualifiedSeller / NewContract / PendingRevenue / ClosedRevenue
  */
 (function () {
